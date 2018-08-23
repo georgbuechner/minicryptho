@@ -1,22 +1,71 @@
 #include <iostream>
-#include "vigenere.h"
+#include "CVigenere.h"
+#include "CFriends.h"
+#include "CUser.h"
 
 using namespace std;
 
 
 int main()
 {
-    CVigenere crypto;
-    char chPlainText[128];
-    char chKey[128];
+    //Variables
+    char chName[128];
+    int wahl;
+    
 
-    cout << (char)91 << endl;
+    cout << "Create user...\n";
+    cout << "Enter name: ";
+    cin.getline(chName, 127);
+    CUser user(chName);
 
-    cout << "Plain text: ";
-    cin.getline(chPlainText, 127);
-    cout << "Key: ";
-    cin.getline(chKey, 127);
+    cout << "Logged in as " << user.getName() << endl;
+    
+    do
+    {
+        cout << "--- MINI CRYPTO ---" << endl;
+        cout << "1: Encrypt Message " << endl;
+        cout << "2: Decrypt Message " << endl;
+        cout << "3: Add friend      " << endl;
+        cout << "4: Show friends    " << endl;
+        cout << "5: Leave Programm  " << endl;
+        cout << ">"; cin>>wahl;
 
-    cout << "Encrypted text: " << crypto.encryption(chPlainText, chKey) << endl;
-    cout << "Decrypted text: " << crypto.decryption(crypto.encryption(chPlainText, chKey), chKey) << endl;
+        switch(wahl)
+        {
+            case(1):
+            {
+                user.encryptMessage();
+                cout << endl;
+            }break;
+
+            case(2):
+            {
+                user.decryptMessage();
+                cout << endl;
+            }break;
+
+            case(3):
+            {
+                user.addFriend();
+                cout << endl;
+            }break;
+
+            case(4):
+            {
+                user.showFriends();
+                cout << endl;
+            }break;
+
+            case(5):
+            {
+                cout << "Programm closing...\n\n";
+            }break;
+
+            default:
+            {
+                cout << "Worng input! \n\n";
+            }
+        }
+    }while(wahl != 5);
+    
 }
