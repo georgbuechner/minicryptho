@@ -63,6 +63,17 @@ void CFunctions::clearMemory(char* chT)
 		chT[i] = '\0';
 }
 
+//m_getline: custom keyboard input for strings
+void CFunctions::m_getline(string &var)
+{
+    for(;;)
+    {
+        cout.flush();
+        getline(cin, var);
+        if(var!="")
+            break;
+    }
+}
 
 //Functions: checkField
 //Check if the outlines of the Field are reached

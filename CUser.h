@@ -1,8 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include <stdio.h>
+#include <time.h>
+#include <fstream>
 #include <string>
-#include <list>
+#include <map>
 #include "CVigenere.h"
 #include "CFriends.h"
 #include "CFunctions.h"
@@ -16,19 +19,23 @@ class CUser
         char m_chDecryptedText[128];
 
         CFriend* m_curFriend;
-        std::list<CFriend*>* m_listFriends; 
+        std::map<std::string, CFriend*>* m_listFriends; 
     public:
         CUser(char* chName);
         void encryptMessage();
         void decryptMessage();
 
         void addFriend();
+        void deleteFriend();
         void showFriends();
+        void selectFriend();
+        void showKey();
 
         char* getName() {
             return m_chName;
         }
 
-        void m_getline(std::string &var);
+        void load();
+        void safe();
 };
         

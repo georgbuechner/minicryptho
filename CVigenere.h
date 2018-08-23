@@ -33,13 +33,17 @@ class CVigenere
                 else
                     chEncryptedText[i] = (char)Text+Key;
             }
-       }
+            
+            chEncryptedText[strlen(chText)] = '\0';
+        }
 
-       void decryption(char* chText, char* chKey, char* chDecryptedText)
-       {   
+        void decryption(char* chText, char* chKey, char* chDecryptedText)
+        {   
+            for(unsigned int i=0; i<strlen(chDecryptedText); i++)
+                chDecryptedText[i] = '\0';
+
             unsigned int j = 0;
-
-           for(unsigned int i=0; i<strlen(chText); i++)
+            for(unsigned int i=0; i<strlen(chText); i++)
             {
                 int Text = (int)chText[i];
                 if(Text > 90 || Text < 65)
@@ -60,7 +64,7 @@ class CVigenere
                     chDecryptedText[i] = (char)Text-Key;
             }
             
-            std::cout << chDecryptedText << "\n";
+            chDecryptedText[strlen(chText)] = '\0';
         }
 };
             

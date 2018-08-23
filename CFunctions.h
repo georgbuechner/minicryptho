@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
 	char* createSpace(char *chText);
 	char* convertIntChar(int y, int x);
 
+    void m_getline(std::string &var);
 	bool checkField(int ymax, int xmax, int y, int x);
 };
 
