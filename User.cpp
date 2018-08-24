@@ -54,7 +54,6 @@ void CUser::addFriend()
 {
     //Variables
     CFunctions function;
-    int wahl;
     string sName;
 
     //User input
@@ -62,30 +61,64 @@ void CUser::addFriend()
     function.m_getline(sName);
     char* chName = (char*)sName.c_str();
 
-    do
+    for(;;)
     {
         cout << "1: Generate key \n";
         cout << "2: Enter key \n"; 
-        cout << "> "; cin >> wahl;
+        cout << "> "; 
 
-        if(wahl == 1)
+        //User input
+        string sInput;
+        function.m_getline(sInput);
+        char* chInput = (char*)sInput.c_str();
+
+        if(function.compare(chInput, (char*)"1") == true || function.compare(chInput, (char*)"Generate key") == true)
         {
             srand(time(NULL));
-            char chKey[128];
+            char chKey[5000];
 
+            //Select security level
+            int securityLevel = 0;
+            for(;;)
+            {
+                cout << "Security level (1-10): ";
+
+                //Player input
+                string sSecurity;
+                function.m_getline(sSecurity);
+                char* chSecurity = (char*)sSecurity.c_str();
+
+                if(function.compare(chSecurity, (char*)"1") == true || function.compare(chSecurity, (char*)"2") == true ||
+                    function.compare(chSecurity, (char*)"3") == true || function.compare(chSecurity, (char*)"4") == true ||
+                    function.compare(chSecurity, (char*)"5") == true || function.compare(chSecurity, (char*)"6") == true ||
+                    function.compare(chSecurity, (char*)"7") == true || function.compare(chSecurity, (char*)"8") == true ||
+                    function.compare(chSecurity, (char*)"9") == true || function.compare(chSecurity, (char*)"10") == true)
+                 {
+                    securityLevel = stoi(sSecurity);
+                    break;
+                 }
+                
+                 else
+                    cout << "Worng input. Try again.\n";   
+            }
+
+            cout << "Selected security level " << securityLevel << " = " << 50*securityLevel << " characters.\n";
+            
             //Generate key
-            for(int i=0; i<100; i++)
+            for(int i=0; i<50*securityLevel; i++)
             {
                 int iSecret = rand() % 26 + 65;
                 chKey[i] = iSecret;
             }
-            chKey[100] = '\0';
+            chKey[50*securityLevel] = '\0';
 
             CFriend* newFriend = new CFriend(chName, chKey);
             m_listFriends->insert(pair<string, CFriend*> (sName, newFriend));
+
+            break;
         }
 
-        else if(wahl == 2)
+        else if(function.compare(chInput, (char*)"2") == true || function.compare(chInput, (char*)"Enter key") == true)
         {
             string sKey;
             cout << "Enter Key: ";
@@ -93,19 +126,19 @@ void CUser::addFriend()
             char* chKey = (char*)sKey.c_str();
             CFriend* newFriend = new CFriend(chName, chKey);
             m_listFriends->insert(pair<string, CFriend*> (sName, newFriend));
+            break;
         }
 
         else
             cout << "Wrong input! \n\n";
     }
-    while(wahl != 1 && wahl != 2);
 
 }
 
 void CUser::deleteFriend()
 {
     //Variables
-    char chWahl;
+    CFunctions function;
 
     //Select friend
     selectFriend();
@@ -114,9 +147,13 @@ void CUser::deleteFriend()
     for(;;)
     {
         cout << "Sure you want to delete " << sName << "?\n";
-        cout << "Y(es)/(N)o? >"; cin >> chWahl;
+        cout << "Y(es)/(N)o? >"; 
 
-        if(chWahl == 'Y' || chWahl == 'y')
+        string sInput;
+        function.m_getline(sInput);
+        char* chInput = (char*)sInput.c_str();
+
+        if(function.compare(chInput, (char*)"Y") == true || function.compare(chInput, (char*)"y") == true)
         {
             m_listFriends->erase(sName);
             delete m_curFriend;
@@ -125,7 +162,7 @@ void CUser::deleteFriend()
             return;
         }
 
-        else if(chWahl == 'N' || chWahl == 'n')
+        else if(function.compare(chInput, (char*)"N") == true ||function.compare(chInput, (char*)"n") == true)
         {
             cout << sName << " has  n o t  been deleted.\n";
             return;
@@ -135,17 +172,93 @@ void CUser::deleteFriend()
             cout << "Wrong input!\n\n";
     }
 }
-        
 
+/**
+* changeKey: change the Key of a friend
+* 1. generate new key
+* 2. enter new key
+**/
+void CUser::changeKey()
+{
+    //Variables
+    CFunctions function;
+
+    //Select friend
+    selectFriend();
+
+    for(;;)
+    {
+        cout << "1. Generate new key?   \n";
+        cout << "2. Enter new key?      \n";
+        cout << "3. Changed your mind?  \n";
+        cout << "> ";
+        
+        //User input
+        string sInput;
+        function.m_getline(sInput);
+        char* chInput = (char*)sInput.c_str();
+
+        if(function.compare(chInput, (char*)"1") == true ||
+            function.contains(chInput, (char*)"Generate") == true)
+        {
+            srand(time(NULL));
+            char chKey[5000];
+
+            //Generate key
+            for(int i=0; i<100; i++)
+            {
+                int iSecret = rand() % 26 + 65;
+                chKey[i] = iSecret;
+            }
+            chKey[100] = '\0';
+
+            //Set new key
+            m_curFriend->setKey(chKey);
+
+            break;
+        }
+
+        else if(function.compare(chInput, (char*)"2") == true ||
+            function.contains(chInput, (char*)"Enter") == true)
+        {
+            //User input (new key)
+            string sKey;
+            cout << "Enter new key: ";
+            function.m_getline(sKey);
+            char* chKey = (char*)sKey.c_str();
+
+            //Set new key
+            m_curFriend->setKey(chKey);
+            
+            break;
+        }
+
+        else if(function.compare(chInput, (char*)"3") == true ||
+            function.compare(chInput, (char*)"exit") == true)
+        {
+            cout << "Prozess of changing key stopped on own account\n"; 
+            break;
+        }
+
+        else
+            cout << "Wrong input! Enter \"exit\" to end prozess.\n";
+    }
+}    
+
+/**
+* selectFriend: select a friend from list of the users friends
+**/
 void CUser::selectFriend()
 {
     //Variables
     CFunctions function;
+
+    //Show friends
     showFriends();
 
     for(;;)
     {
-        cout << "Select friend: ";
+        cout << "Select friend (enter name): ";
         string sInput;
         function.m_getline(sInput);
 
@@ -198,7 +311,7 @@ void CUser::safe()
         write << "\n";
     }    
 
-    cout << "Saving finished.";
+    cout << "Saving finished.\n";
     write.close();
 }
 
@@ -265,8 +378,24 @@ void CUser::load()
             chName[length] = '\0';
 
             //Read beginng of key
-            sKey = sBuffer.erase(0, found);
+            sKey = sBuffer.erase(0, found+1);
         }
     }
+    
+    //Add last friend in list
+    if(sKey.length() != 0)
+    {    
+        //Create key as a char array and  name a string
+        char* chKey = (char*)sKey.c_str();
+        string sName(chName);
+
+        //Create friend and add to dictionary of friends
+        CFriend* newFriend = new CFriend(chName, chKey);
+        m_listFriends->insert(pair<string, CFriend*> (sName, newFriend));
+    
+        function.clearMemory(chName);
+        function.clearMemory(chKey);
+    }
+        
 }
 

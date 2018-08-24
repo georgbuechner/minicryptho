@@ -15,8 +15,8 @@ class CUser
 {
     private: 
         char m_chName[128];
-        char m_chEncryptedText[128];
-        char m_chDecryptedText[128];
+        char m_chEncryptedText[5000];
+        char m_chDecryptedText[5000];
 
         CFriend* m_curFriend;
         std::map<std::string, CFriend*>* m_listFriends; 
@@ -27,6 +27,7 @@ class CUser
 
         void addFriend();
         void deleteFriend();
+        void changeKey();
         void showFriends();
         void selectFriend();
         void showKey();

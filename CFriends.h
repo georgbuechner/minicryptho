@@ -7,13 +7,19 @@ class CFriend
 {
     private:
         char m_chName[128];
-        char m_chKey[128];
+        char m_chKey[5000];
     public:
         CFriend(char* chName, char* chKey);
+
         char* getName() {
             return m_chName;
         }
         char* getKey() {
             return m_chKey;
+        }
+
+        void setKey(char* chKey) {
+            CFunctions functions;
+            functions.allocate(m_chKey, chKey);
         }
 };

@@ -8,19 +8,25 @@ using namespace std;
 */
 void CMinicrypto::programmStart() 
 {
-    //Variables
+    //Variabels
     CFunctions function;
 
+    //Loop, for player input: 1. register new user; 2. login with exiting user; 3. close programm
     for(;;)
     {
-        char chWahl;
         cout << "--- Minicrypto --- \n";
         cout << "1. Register        \n";
         cout << "2. Login           \n";
         cout << "3. Leave           \n";
-        cout << "> "; cin >> chWahl;
+        cout << "> "; 
 
-        if(chWahl == '1')
+        //User input
+        string sInput;
+        function.m_getline(sInput);
+        char* chInput = (char*)sInput.c_str();
+
+        if(function.compare(chInput, (char*) "1") == true ||
+            function.compare(chInput, (char*)"Register") == true)
         {
             if(registerUser() == false)
             {
@@ -29,7 +35,8 @@ void CMinicrypto::programmStart()
             }
             break;
         }
-        else if(chWahl == '2')
+        else if(function.compare(chInput, (char*)"2") == true ||
+            function.compare(chInput, (char*)"Login") == true)
         {
             if(loginUser() == false)
             {
@@ -39,7 +46,8 @@ void CMinicrypto::programmStart()
             break;
         }
 
-        else if(chWahl == '3')
+        else if(function.compare(chInput, (char*)"3") == true ||
+            function.compare(chInput, (char*)"Leave") == true)
         {
             cout << "Closing programm...\n";
             return; 
@@ -111,7 +119,7 @@ bool CMinicrypto::registerUser()
             if(function.compare(chInput, (char*)"Y") == true || sInput.compare("y") == true)
             {
                 //Create path to directory
-                string sPath = "mkdir -p home/leonce/Minicrypto/";
+                string sPath = "mkdir -p /home/leonce/MiniCrypto/";
                 sPath.append(sUserName);
                 sPath.append("/");
                 
@@ -208,9 +216,10 @@ void CMinicrypto::programmRunning()
         cout << "2. Decrypt message \n";
         cout << "3. Add friend      \n";
         cout << "4. Delete friend   \n";
-        cout << "5. Show friends    \n";
-        cout << "6. Show friends key\n";
-        cout << "7. Leeve programm  \n";
+        cout << "5. Change key      \n";
+        cout << "6. Show friends    \n";
+        cout << "7. Show friends key\n";
+        cout << "8. Leave programm  \n";
         cout << "> ";
 
         function.m_getline(sInput);
@@ -244,33 +253,35 @@ void CMinicrypto::programmRunning()
             cout << "\n";
         }
 
-        //Show all friends
+        //Change key of a friend
         else if(function.compare(chInput, (char*)"5"))
+        {
+            m_user->changeKey();
+            cout << "\n";
+        }
+
+        //Show all friends
+        else if(function.compare(chInput, (char*)"6"))
         {
             m_user->showFriends();
             cout << endl;
         }
 
         //Show key
-        else if(function.compare(chInput, (char*)"6"))
+        else if(function.compare(chInput, (char*)"7"))
         {
             m_user->showKey();
             cout << endl;
         }
 
         //Close programm
-        else if(function.compare(chInput, (char*)"7"))
+        else if(function.compare(chInput, (char*)"8"))
                 cout << "Programm closing...\n\n";
 
         //Wrong input
         else
             cout << "Worng input! \n\n";
 
-    }while(function.compare(chInput, (char*)"7") == false);
+    }while(function.compare(chInput, (char*)"8") == false);
 }
 
-   
-     
-    
-    
-    
