@@ -11,6 +11,8 @@ void CMinicrypto::programmStart()
     //Variabels
     CFunctions function;
 
+    cout << function.charToInt((char*)"25") << endl;
+    
     //Loop, for player input: 1. register new user; 2. login with exiting user; 3. close programm
     for(;;)
     {

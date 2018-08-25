@@ -80,14 +80,18 @@ void CFunctions::m_getline(string &var)
 * @parameter char* (input as char array)
 * @return int (return integer. Return -1 if input is not a number)
 **/
-int CFunctions::charToInt(char*)
+int CFunctions::charToInt(char* chInput)
 {
     int num = 0;
+    cout << strlen(chInput) << endl;
     for(int i=0; i<strlen(chInput); i++)
     {
-        int elm = (int)chInput[i];
-        if(elem > xx && < xx)
-            num += elem*(i+strlen(chInput)-i);
+        int elem = (int)chInput[i] -48;
+        int power = (double)strlen(chInput)-1-i;
+        cout << elem << ", " << power << endl;
+
+        if(elem >= 0 && elem <= 9)
+            num += elem*pow((double)10, (double)strlen(chInput)-1-i);
         else
             return -1;
     }

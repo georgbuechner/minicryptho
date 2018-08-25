@@ -6,6 +6,7 @@
 
 
 #include <iostream>
+#include <math.h>
 #include <string.h>
 #include <string>
 
@@ -23,7 +24,7 @@ public:
 	void clearMemory(char *chVar);
 	char* createSpace(char *chText);
 	char* convertIntChar(int y, int x);
-    int* charToInt(char* chInput);
+    int charToInt(char* chInput);
 
     void m_getline(std::string &var);
 	bool checkField(int ymax, int xmax, int y, int x);
