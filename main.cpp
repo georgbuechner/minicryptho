@@ -6,7 +6,9 @@ using namespace std;
 
 int main()
 {
+    //Variables
     CMinicrypto minicrypto;
 
+    //Start programm
     minicrypto.programmStart();
 }

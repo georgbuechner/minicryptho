@@ -295,7 +295,7 @@ void CUser::showKey()
 void CUser::safe()
 {
     //Variables
-    string sPath = "/home/leonce/MiniCrypto/";
+    string sPath = "users";
     sPath.append(m_chName);
     sPath.append("/listFriends.txt");
     cout << sPath << endl;
@@ -324,7 +324,7 @@ void CUser::load()
     CFunctions function;
 
     //Create path
-    string sPath = "/home/leonce/MiniCrypto/";
+    string sPath = "users/";
     sPath.append(m_chName);
     sPath.append("/listFriends.txt");
 

@@ -14,38 +14,53 @@ void CMinicrypto::programmStart()
     //Loop, for player input: 1. register new user; 2. login with exiting user; 3. close programm
     for(;;)
     {
+        //User options:
         cout << "--- Minicrypto --- \n";
         cout << "1. Register        \n";
         cout << "2. Login           \n";
         cout << "3. Leave           \n";
         cout << "> "; 
 
-        //User input
+        //User input (number or content):
         string sInput;
         function.m_getline(sInput);
         char* chInput = (char*)sInput.c_str();
 
+        //Select user input
+
+        //Register with new account
         if(function.compare(chInput, (char*) "1") == true ||
             function.compare(chInput, (char*)"Register") == true)
         {
+            //Call registerUser(), if return is falls, close programm
             if(registerUser() == false)
             {
                 cout << "Programm closed due to error. We're sorry. \n";
                 return;
             }
-            break;
-        }
-        else if(function.compare(chInput, (char*)"2") == true ||
-            function.compare(chInput, (char*)"Login") == true)
-        {
-            if(loginUser() == false)
-            {
-                cout << "Programm closed due ti error. We're sorry. \n";
-                return;
-            }
+
+            //if true, then call programmRunning() to enter main loop
+            programmRunning();
+
             break;
         }
 
+        //Log in with existing account
+        else if(function.compare(chInput, (char*)"2") == true ||
+            function.compare(chInput, (char*)"Login") == true)
+        {
+            //Call loginUser(), if return is falls, close program
+            if(loginUser() == false)
+            {
+                cout << "Programm closed due to error. We're sorry. \n";
+                return;
+            }
+
+            //if true, then call programmRunning() to enter main loop
+            break;
+        }
+
+        //Close programm
         else if(function.compare(chInput, (char*)"3") == true ||
             function.compare(chInput, (char*)"Leave") == true)
         {
@@ -53,16 +68,15 @@ void CMinicrypto::programmStart()
             return; 
         }
 
+        //Wrong input
         else
             cout << "Wrong input!\n";
 
         cout << "\n";
     } 
 
-    programmRunning();
-
-    //Save user | safe friends names and keys in a .txt file
-    m_user->safe();
+    //End message
+    cout << "Thank you for using \"MINI CRYPTO\"\n";
 }
 
 /**
@@ -72,16 +86,21 @@ bool CMinicrypto::registerUser()
 {
     //Variables
     CFunctions function;
+
+    //Open directory
     DIR *dir_allUsers;
     struct dirent* e_user;
 
-    dir_allUsers = opendir("/home/leonce/MiniCrypto");
+    dir_allUsers = opendir("users");
+
+    //Check whether directory could be opened
     if(!dir_allUsers)
     {
         cout << "Fatal error! Dictionary not found!\n";
         return false;
     }
 
+    //Loop, till user registered or quit the programm
     for(;;)
     {
         //User input: user name
@@ -90,6 +109,7 @@ bool CMinicrypto::registerUser()
         function.m_getline(sUserName);
         char* chUserName = (char*)sUserName.c_str();
         
+        //Check whether user already exists
         bool nameUsed = false;
         while((e_user = readdir(dir_allUsers)) != NULL)
         {
@@ -119,7 +139,7 @@ bool CMinicrypto::registerUser()
             if(function.compare(chInput, (char*)"Y") == true || sInput.compare("y") == true)
             {
                 //Create path to directory
-                string sPath = "mkdir -p /home/leonce/MiniCrypto/";
+                string sPath = "mkdir -p /users/";
                 sPath.append(sUserName);
                 sPath.append("/");
                 
@@ -175,7 +195,7 @@ bool CMinicrypto::loginUser()
         DIR *dir_allUsers;
         struct dirent* e_user;
 
-        dir_allUsers = opendir("/home/leonce/MiniCrypto");
+        dir_allUsers = opendir("users");
         if(!dir_allUsers)
         {
             cout << "Fatal error! Dictionary not found!\n";
@@ -276,12 +296,15 @@ void CMinicrypto::programmRunning()
 
         //Close programm
         else if(function.compare(chInput, (char*)"8"))
-                cout << "Programm closing...\n\n";
+                cout << "Logging out...\n";
 
         //Wrong input
         else
             cout << "Worng input! \n\n";
 
     }while(function.compare(chInput, (char*)"8") == false);
+
+    //Safe friends list
+    m_user->safe();
 }
 
