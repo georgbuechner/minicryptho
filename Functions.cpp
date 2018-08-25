@@ -75,6 +75,28 @@ void CFunctions::m_getline(string &var)
     }
 }
 
+/**
+* charToInt: convert char* to int. return -1 if input is not a number
+* @parameter char* (input as char array)
+* @return int (return integer. Return -1 if input is not a number)
+**/
+int CFunctions::charToInt(char*)
+{
+    int num = 0;
+    for(int i=0; i<strlen(chInput); i++)
+    {
+        int elm = (int)chInput[i];
+        if(elem > xx && < xx)
+            num += elem*(i+strlen(chInput)-i);
+        else
+            return -1;
+    }
+
+    return num;
+} 
+        
+        
+
 //Functions: checkField
 //Check if the outlines of the Field are reached
 bool CFunctions::checkField(int ymax, int xmax, int y, int x)

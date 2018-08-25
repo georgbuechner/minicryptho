@@ -88,11 +88,16 @@ void CUser::addFriend()
                 function.m_getline(sSecurity);
                 char* chSecurity = (char*)sSecurity.c_str();
 
-                if(function.compare(chSecurity, (char*)"1") == true || function.compare(chSecurity, (char*)"2") == true ||
-                    function.compare(chSecurity, (char*)"3") == true || function.compare(chSecurity, (char*)"4") == true ||
-                    function.compare(chSecurity, (char*)"5") == true || function.compare(chSecurity, (char*)"6") == true ||
-                    function.compare(chSecurity, (char*)"7") == true || function.compare(chSecurity, (char*)"8") == true ||
-                    function.compare(chSecurity, (char*)"9") == true || function.compare(chSecurity, (char*)"10") == true)
+                if(function.compare(chSecurity, (char*)"1") == true || 
+                    function.compare(chSecurity, (char*)"2") == true ||
+                    function.compare(chSecurity, (char*)"3") == true || 
+                    function.compare(chSecurity, (char*)"4") == true ||
+                    function.compare(chSecurity, (char*)"5") == true || 
+                    function.compare(chSecurity, (char*)"6") == true ||
+                    function.compare(chSecurity, (char*)"7") == true || 
+                    function.compare(chSecurity, (char*)"8") == true ||
+                    function.compare(chSecurity, (char*)"9") == true || 
+                    function.compare(chSecurity, (char*)"10") == true)
                  {
                     securityLevel = stoi(sSecurity);
                     break;
@@ -102,10 +107,11 @@ void CUser::addFriend()
                     cout << "Worng input. Try again.\n";   
             }
 
-            cout << "Selected security level " << securityLevel << " = " << 50*securityLevel << " characters.\n";
+            cout << "Selected security level " << securityLevel;
+            cout << " = " << 50*securityLevel << " characters.\n";
             
             //Generate key
-            for(int i=0; i<50*securityLevel; i++)
+            for(int i=0; i<50*securityLevel*10; i++)
             {
                 int iSecret = rand() % 26 + 65;
                 chKey[i] = iSecret;

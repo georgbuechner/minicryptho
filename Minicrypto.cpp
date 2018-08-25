@@ -41,8 +41,6 @@ void CMinicrypto::programmStart()
 
             //if true, then call programmRunning() to enter main loop
             programmRunning();
-
-            break;
         }
 
         //Log in with existing account
@@ -57,7 +55,7 @@ void CMinicrypto::programmStart()
             }
 
             //if true, then call programmRunning() to enter main loop
-            break;
+            programmRunning();
         }
 
         //Close programm
@@ -104,7 +102,7 @@ bool CMinicrypto::registerUser()
     for(;;)
     {
         //User input: user name
-        cout << "User name: ";
+        cout << "User name (no space): ";
         string sUserName;
         function.m_getline(sUserName);
         char* chUserName = (char*)sUserName.c_str();
@@ -139,7 +137,7 @@ bool CMinicrypto::registerUser()
             if(function.compare(chInput, (char*)"Y") == true || sInput.compare("y") == true)
             {
                 //Create path to directory
-                string sPath = "mkdir -p /users/";
+                string sPath = "mkdir -p users/";
                 sPath.append(sUserName);
                 sPath.append("/");
                 
@@ -185,7 +183,7 @@ bool CMinicrypto::loginUser()
     for(;;)
     {
         string sUserName;
-        cout << "User name: ";
+        cout << "User name (no space): ";
         function.m_getline(sUserName);
         char* chUserName = (char*)sUserName.c_str();
 
@@ -239,7 +237,7 @@ void CMinicrypto::programmRunning()
         cout << "5. Change key      \n";
         cout << "6. Show friends    \n";
         cout << "7. Show friends key\n";
-        cout << "8. Leave programm  \n";
+        cout << "8. Log out         \n";
         cout << "> ";
 
         function.m_getline(sInput);
