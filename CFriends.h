@@ -9,7 +9,11 @@ class CFriend
         char m_chName[128];
         char m_chKey[5000];
     public:
-        CFriend(char* chName, char* chKey);
+        CFriend(char* chName, char* chKey) {
+            CFunctions F;
+            F.allocate(m_chName, chName);
+            F.allocate(m_chKey, chKey);
+        }
 
         char* getName() {
             return m_chName;
